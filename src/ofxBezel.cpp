@@ -2,7 +2,6 @@
 
 void ofxBezel::setup(float cSpacer, float rSpacer) {
 	//shader.load(vertShaderPath, fragShaderPath);
-
 	string fragmentShader = 
 		"#version 130\n \
 		#extension GL_ARB_texture_rectangle : enable\n \
@@ -42,9 +41,7 @@ void ofxBezel::setup(float cSpacer, float rSpacer) {
 		}";
 
 	shader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShader);
-
 	shader.linkProgram();
-
 
 	bezelHelper.loadImage("bezelHelper.png");
 	drawBezelHelper = false;
@@ -94,7 +91,7 @@ float ofxBezel::getRowSpacer() {
 }
 
 void ofxBezel::setRowSpacer(float val) {
-	if(val >= 0 && val < ofGetWidth()) {
+	if(val >= 0 && val < ofGetHeight()) {
 		rowSpacer = val;
 	}
 }
