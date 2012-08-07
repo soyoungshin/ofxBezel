@@ -9,7 +9,7 @@
 class ofxBezel {
 	public:
 		ofxBezel() {};
-		void setup(float rSpacer, float cSpacer);
+		void setup(float rSpacer, float cSpacer, int numRows, int numColumns);
 		void	draw(ofFbo* fbo);
 		float	getDisplayHelper();
 		void	setDisplayHelper(bool display);

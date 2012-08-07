@@ -1,8 +1,12 @@
 #include "ofxBezel.h"
 
-void ofxBezel::setup(float cSpacer, float rSpacer) {
-	//shader.load(vertShaderPath, fragShaderPath);
-	string fragmentShader = 
+void ofxBezel::setup(float rSpacer, float cSpacer, int numRows, int numColumns) {
+	if(numRows < 0) numRows = 1;
+	if(numColumns < 0) numColumns = 1;
+
+	stringstream fragmentShader;
+
+	fragmentShader << 
 		"#version 130\n \
 		#extension GL_ARB_texture_rectangle : enable\n \
 		\
@@ -17,30 +21,22 @@ void ofxBezel::setup(float cSpacer, float rSpacer) {
 		{\
 		vec2 st	= gl_TexCoord[0].st;\
 		\
-		float halfTexWidth = texWidth / 2;\
-		float thirdTexHeight = texHeight / 3;\
+		float texWidthChunk = texWidth / " << numColumns << ";\
 		\
-		float horzScalar = 1 - columnSpacer / texWidth;\
-		if(st[0] < halfTexWidth) {\
-			st[0] = st[0] * horzScalar;\
-		} else {\
-			st[0] = st[0] * horzScalar + columnSpacer;\
-		}\
+		float texHeightChunk = texHeight / " << numRows << ";\
 		\
-		float vertScalar = 1 - rowSpacer * 2 / texHeight;\
+		float horzScalar = 1 - columnSpacer * " << numColumns - 1 << " / texWidth; \
+		int column = int(st[0] / texWidthChunk); \
+		st[0] = st[0] * horzScalar + column * columnSpacer; \
 		\
-		if(st[1] < thirdTexHeight) {\
-			st[1] = st[1] * vertScalar;\
-		} else if(st[1] < thirdTexHeight * 2) {\
-			st[1] = st[1] * vertScalar + rowSpacer;\
-		} else {\
-			st[1] = st[1] * vertScalar + rowSpacer * 2;\
-		}\
+		int row = int(st[1] / texHeightChunk); \
+		float vertScalar = 1 - rowSpacer * " << numRows - 1 << " / texHeight;\
+		st[1] = st[1] * vertScalar + row * rowSpacer;\
 		\
 		gl_FragColor = texture(tex0 , st);\
 		}";
 
-	shader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShader);
+	shader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShader.str());
 	shader.linkProgram();
 
 	bezelHelper.loadImage("bezelHelper.png");
