@@ -21,6 +21,21 @@ void testApp::draw(){
 	player.draw(0, 0, ofGetWidth(), ofGetHeight());
 	fbo.end();
 	bezel.draw(&fbo);
+
+	// draw some debug info
+	ofEnableAlphaBlending();
+	ofSetColor(0,0,0,128);
+	ofRect(0,0,400,90);
+	ofDisableAlphaBlending();
+
+	ofSetHexColor(0xffffff);
+	stringstream toDraw;
+	toDraw <<	"press up/down arrows to adjust column spacing" << endl <<
+				"press left/right arrow to adjust row spacing" << endl << 
+				endl <<
+				"column spacing: " << bezel.getColumnSpacer() << " pixels" << endl <<
+				"row spacing   : " << bezel.getRowSpacer() << " pixels" << endl;  
+    ofDrawBitmapString(toDraw.str(), 20, 20);
 }
 
 //--------------------------------------------------------------
