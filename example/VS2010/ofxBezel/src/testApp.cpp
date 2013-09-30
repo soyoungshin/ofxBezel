@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 	fbo.allocate(ofGetWidth(), ofGetHeight());
-	// amount of pixels to lop off of video between screens, 
+	// amount of pixels to lop off of video between screens,
 	// and number screens in each column/row
 	bezel.setup(30.0f, 30.0f, 3, 2);
 	player.loadMovie("fingers.mov");
@@ -21,20 +21,20 @@ void testApp::draw(){
 	player.draw(0, 0, ofGetWidth(), ofGetHeight());
 	fbo.end();
 	bezel.draw(&fbo);
-
+    
 	// draw some debug info
 	ofEnableAlphaBlending();
 	ofSetColor(0,0,0,128);
 	ofRect(0,0,400,90);
 	ofDisableAlphaBlending();
-
+    
 	ofSetHexColor(0xffffff);
 	stringstream toDraw;
 	toDraw <<	"press up/down arrows to adjust column spacing" << endl <<
-				"press left/right arrow to adjust row spacing" << endl << 
-				endl <<
-				"column spacing: " << bezel.getColumnSpacer() << " pixels" << endl <<
-				"row spacing   : " << bezel.getRowSpacer() << " pixels" << endl;  
+    "press left/right arrow to adjust row spacing" << endl <<
+    endl <<
+    "column spacing: " << bezel.getColumnSpacer() << " pixels" << endl <<
+    "row spacing   : " << bezel.getRowSpacer() << " pixels" << endl;
     ofDrawBitmapString(toDraw.str(), 20, 20);
 }
 
@@ -58,7 +58,7 @@ void testApp::keyPressed(int key){
 			bezel.setDisplayHelper(!bezel.getDisplayHelper());
 		default:
 			break;
-	}	
+	}
 }
 
 //--------------------------------------------------------------

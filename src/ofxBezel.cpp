@@ -7,7 +7,7 @@ void ofxBezel::setup(float rSpacer, float cSpacer, int numRows, int numColumns) 
 	stringstream fragmentShader;
 
 	fragmentShader << 
-		"#version 130\n \
+		"#version 120\n \
 		#extension GL_ARB_texture_rectangle : enable\n \
 		\
 		uniform sampler2DRect tex0;\
@@ -33,7 +33,7 @@ void ofxBezel::setup(float rSpacer, float cSpacer, int numRows, int numColumns) 
 		float vertScalar = 1 - rowSpacer * " << numRows - 1 << " / texHeight;\
 		st[1] = st[1] * vertScalar + row * rowSpacer;\
 		\
-		gl_FragColor = texture(tex0 , st);\
+		gl_FragColor = texture2DRect(tex0 , st);\
 		}";
 
 	shader.setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentShader.str());
